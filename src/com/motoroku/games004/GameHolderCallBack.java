@@ -6,12 +6,46 @@ import android.graphics.Paint;
 import android.view.SurfaceHolder;
 
 public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
-	SurfaceHolder holder = null;
+	SurfaceHolder mHolder = null;
+	TetrisRogic mTetrisRogic;
+	int blockSize = 40;
+
+	private Thread thread = null;
+	private boolean isAttached = true;
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		int time = 0;
+		while (isAttached) {
+			paint(mHolder);
+			if (time == 0) {
+				mTetrisRogic.addNewBlock();
+			}
+			if (time % 10 == 0) {
+				mTetrisRogic.tetrisBlock.moveDown();
+			}
+			mTetrisRogic.merge();
 
+			time++;
+
+			if (time == 100) {
+				time = 0;
+			}
+		}
+	}
+
+	@Override
+	public void surfaceCreated(SurfaceHolder holder) {
+
+		mTetrisRogic = new TetrisRogic();
+
+		// TODO Auto-generated method stub
+
+		this.mHolder = holder;
+		paint(mHolder);
+		thread = new Thread(this);
+		thread.start();
 	}
 
 	@Override
@@ -21,22 +55,36 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 	}
 
 	@Override
-	public void surfaceCreated(SurfaceHolder holder) {
+	public void surfaceDestroyed(SurfaceHolder arg0) {
 		// TODO Auto-generated method stub
+		isAttached = false;
+		thread = null;
+	}
 
-		this.holder = holder;
+	private void paint(SurfaceHolder holder) {
+		int x = 0;
+		int y = 0;
 
 		Canvas canvas = holder.lockCanvas();
 		Paint paint = new Paint();
-		paint.setColor(Color.GREEN);
-		canvas.drawLine(0, 0, 100, 100, paint);
+
+		// canvas.drawLine(0, 0, 100, 100, paint);
+
+		for (int i = 0; i < TetrisStage.STAGE_HEIGHT; i++) {
+			for (int j = 0; j < TetrisStage.STAGE_WIDTH; j++) {
+				if (mTetrisRogic.tetrisStage.stage[i][j] == 0) {
+					paint.setColor(Color.GREEN);
+				} else {
+					paint.setColor(Color.RED);
+				}
+				canvas.drawRect(x, y, x + blockSize, y + blockSize, paint);
+				x = x + blockSize + 5;
+			}
+			x = 0;
+			y = y + blockSize + 5;
+		}
+
 		holder.unlockCanvasAndPost(canvas);
-	}
-
-	@Override
-	public void surfaceDestroyed(SurfaceHolder arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 }
