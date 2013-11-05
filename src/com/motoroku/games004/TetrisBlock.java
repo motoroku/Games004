@@ -5,15 +5,15 @@ import java.util.Random;
 public class TetrisBlock {
 	int xOffset; // 現在操作しているブロックの座標として使う
 	int yOffset; // 現在操作しているブロックの座標として使う
+	int[][] block;
 	Random random = new Random();
 
 	public TetrisBlock() {
-		xOffset = TetrisStage.STAGE_WIDTH / 2;
-		yOffset = 0;
+		createNewBlock();
 	}
 
 	public int[][] createNewBlock() {
-		int[][] block = null;
+		block = null;
 		// TODO 乱数生成してnumを操作。ランダムにブロック配列を生成して返す。
 		int num = random.nextInt(7) + 1;
 		switch (num) {
@@ -43,6 +43,7 @@ public class TetrisBlock {
 				// default:
 				// block = new int[][] { { 1, 1 }, { 1, 1 }, { 1, 1 } };
 		}
+		resetPosition();
 		return block;
 	}
 
@@ -59,8 +60,22 @@ public class TetrisBlock {
 	public void moveDown() {
 		yOffset++;
 
+		// TODO とりあえずでステージ外まで行ったら位置情報を初期化している。要修正。
 		if (yOffset > TetrisStage.STAGE_HEIGHT + 5) {
 			yOffset = 0;
 		}
+	}
+
+	public void moveRight() {
+		xOffset++;
+	}
+
+	public void moveLeft() {
+		xOffset--;
+	}
+
+	private void resetPosition() {
+		xOffset = TetrisStage.STAGE_WIDTH / 2;
+		yOffset = 0;
 	}
 }

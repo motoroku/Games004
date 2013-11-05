@@ -17,4 +17,9 @@ public class GameView extends SurfaceView {
 		holder.addCallback(mGameHolderCallBack);
 	}
 
+	public void onClicked(int id) {
+		// TODO Auto-generated method stub
+		mGameHolderCallBack.onClickedButton(id);
+	}
+
 }

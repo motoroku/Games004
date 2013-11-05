@@ -2,14 +2,10 @@ package com.motoroku.games004;
 
 public class TetrisRogic {
 
-	TetrisBlock tetrisBlock;
 	TetrisStage tetrisStage;
-	int[][] block;
 
 	public TetrisRogic() {
-		tetrisBlock = new TetrisBlock();
 		tetrisStage = new TetrisStage();
-		block = tetrisBlock.createNewBlock();
 	}
 
 	private int[][] getBlockPosition(int xOffset, int yOffset, int[][] block) {
@@ -27,12 +23,8 @@ public class TetrisRogic {
 		return blockPosition;
 	}
 
-	public void addNewBlock() {
-		block = tetrisBlock.createNewBlock();
-	}
-
-	public void merge() {
-		int[][] blockPosition = getBlockPosition(tetrisBlock.xOffset, tetrisBlock.yOffset, block);
+	public void merge(int xOffset, int yOffset, int[][] block) {
+		int[][] blockPosition = getBlockPosition(xOffset, yOffset, block);
 		int k = 0;
 		for (int i = 0; i < TetrisStage.STAGE_HEIGHT; i++) {
 			for (int j = 0; j < TetrisStage.STAGE_WIDTH; j++) {

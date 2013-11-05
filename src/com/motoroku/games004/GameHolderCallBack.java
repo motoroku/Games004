@@ -8,6 +8,7 @@ import android.view.SurfaceHolder;
 public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 	SurfaceHolder mHolder = null;
 	TetrisRogic mTetrisRogic;
+	TetrisBlock mTetrisBlock;
 	int blockSize = 40;
 
 	private Thread thread = null;
@@ -20,12 +21,13 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 		while (isAttached) {
 			paint(mHolder);
 			if (time == 0) {
-				mTetrisRogic.addNewBlock();
+				mTetrisBlock.createNewBlock();
 			}
 			if (time % 10 == 0) {
-				mTetrisRogic.tetrisBlock.moveDown();
+				mTetrisBlock.moveDown();
 			}
-			mTetrisRogic.merge();
+
+			mTetrisRogic.merge(mTetrisBlock.xOffset, mTetrisBlock.yOffset, mTetrisBlock.block);
 
 			time++;
 
@@ -39,6 +41,7 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 	public void surfaceCreated(SurfaceHolder holder) {
 
 		mTetrisRogic = new TetrisRogic();
+		mTetrisBlock = new TetrisBlock();
 
 		// TODO Auto-generated method stub
 
@@ -85,6 +88,19 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 		}
 
 		holder.unlockCanvasAndPost(canvas);
+	}
+
+	public void onClickedButton(int id) {
+		switch (id) {
+			case R.id.buttonRight:
+				mTetrisBlock.moveRight();
+				break;
+			case R.id.buttonLeft:
+				mTetrisBlock.moveLeft();
+				break;
+			default:
+				break;
+		}
 	}
 
 }

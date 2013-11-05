@@ -9,6 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Tetris" />
     </FrameLayout>
 
     <LinearLayout
@@ -16,13 +21,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:orientation="vertical" >
+        android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/button1"
+        <ImageButton
+            android:id="@+id/imageButtonRotate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:src="@android:drawable/ic_menu_rotate" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right" >
+
+            <Button
+                android:id="@+id/buttonLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Left" />
+
+            <Button
+                android:id="@+id/buttonRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Right" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>

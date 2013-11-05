@@ -4,5 +4,8 @@
     <string name="app_name">Games004</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="Left">←</string>
+    <string name="Right">→</string>
+    <string name="Tetris">TETRIS</string>
 
 </resources>
