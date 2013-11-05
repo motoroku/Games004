@@ -19,19 +19,19 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 		// TODO Auto-generated method stub
 		int time = 0;
 		while (isAttached) {
-			paint(mHolder);
 			if (time == 0) {
 				mTetrisBlock.createNewBlock();
 			}
-			if (time % 10 == 0) {
+
+			if (time != 0 && time % 10 == 0) {
 				mTetrisBlock.moveDown();
 			}
 
-			mTetrisRogic.merge(mTetrisBlock.xOffset, mTetrisBlock.yOffset, mTetrisBlock.block);
-
 			time++;
+			mTetrisRogic.merge(mTetrisBlock.xOffset, mTetrisBlock.yOffset, mTetrisBlock.block);
+			paint(mHolder);
 
-			if (time == 100) {
+			if (mTetrisBlock.yOffset >= TetrisStage.STAGE_HEIGHT) {
 				time = 0;
 			}
 		}
@@ -39,12 +39,10 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-
 		mTetrisRogic = new TetrisRogic();
 		mTetrisBlock = new TetrisBlock();
 
 		// TODO Auto-generated method stub
-
 		this.mHolder = holder;
 		paint(mHolder);
 		thread = new Thread(this);
@@ -70,8 +68,6 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 
 		Canvas canvas = holder.lockCanvas();
 		Paint paint = new Paint();
-
-		// canvas.drawLine(0, 0, 100, 100, paint);
 
 		for (int i = 0; i < TetrisStage.STAGE_HEIGHT; i++) {
 			for (int j = 0; j < TetrisStage.STAGE_WIDTH; j++) {

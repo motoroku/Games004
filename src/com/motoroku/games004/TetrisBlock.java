@@ -59,11 +59,6 @@ public class TetrisBlock {
 
 	public void moveDown() {
 		yOffset++;
-
-		// TODO とりあえずでステージ外まで行ったら位置情報を初期化している。要修正。
-		if (yOffset > TetrisStage.STAGE_HEIGHT + 5) {
-			yOffset = 0;
-		}
 	}
 
 	public void moveRight() {
