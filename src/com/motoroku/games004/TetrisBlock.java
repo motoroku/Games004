@@ -3,8 +3,8 @@ package com.motoroku.games004;
 import java.util.Random;
 
 public class TetrisBlock {
-	int xOffset; // 現在操作しているブロックの座標として使う
-	int yOffset; // 現在操作しているブロックの座標として使う
+	int xOffset;
+	int yOffset;
 	int[][] block;
 	Random random = new Random();
 
@@ -14,7 +14,6 @@ public class TetrisBlock {
 
 	public int[][] createNewBlock() {
 		block = null;
-		// TODO 乱数生成してnumを操作。ランダムにブロック配列を生成して返す。
 		int num = random.nextInt(7) + 1;
 		switch (num) {
 			case 1:
@@ -62,7 +61,10 @@ public class TetrisBlock {
 	}
 
 	public void moveRight() {
-		xOffset++;
+		int copyXOffset = block[0].length + xOffset + 1;
+		if (copyXOffset <= TetrisStage.STAGE_WIDTH) {
+			xOffset++;
+		}
 	}
 
 	public void moveLeft() {
