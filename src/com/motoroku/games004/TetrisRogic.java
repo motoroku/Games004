@@ -23,18 +23,17 @@ public class TetrisRogic {
 		return blockPosition;
 	}
 
-	public void merge(int xOffset, int yOffset, int[][] block) {
+	public void merge(int xOffset, int yOffset, int[][] block, int[][] stage) {
 		int[][] blockPosition = getBlockPosition(xOffset, yOffset, block);
 		int k = 0;
 		for (int i = 0; i < TetrisStage.STAGE_HEIGHT; i++) {
 			for (int j = 0; j < TetrisStage.STAGE_WIDTH; j++) {
 				if (k < 4 && i == blockPosition[k][0] && j == blockPosition[k][1]) {
-					tetrisStage.stage[i][j] = 1;
+					stage[i][j] = 1;
 					k++;
 				} else {
-					tetrisStage.stage[i][j] = 0;
+					stage[i][j] = 0;
 				}
-
 			}
 		}
 	}
