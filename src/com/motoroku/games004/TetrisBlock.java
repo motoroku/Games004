@@ -48,7 +48,7 @@ public class TetrisBlock {
 	}
 
 	public int[][] rotate() {
-		int[][] rotated = new int[block.length][block[0].length];
+		int[][] rotated = new int[block[0].length][block.length];
 		for (int x = 0; x < block[0].length; x++) {
 			for (int y = 0; y < block.length; y++) {
 				rotated[x][block.length - y - 1] = block[y][x];
