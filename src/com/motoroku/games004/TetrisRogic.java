@@ -9,7 +9,7 @@ public class TetrisRogic {
 	}
 
 	private int[][] getBlockPosition(int xOffset, int yOffset, int[][] block) {
-		int[][] blockPosition = new int[4][4];
+		int[][] blockPosition = new int[TetrisBlock.BLOCK_SIZE][TetrisBlock.BLOCK_SIZE];
 		int k = 0;
 		for (int i = 0; i < block.length; i++) {
 			for (int j = 0; j < block[0].length; j++) {
