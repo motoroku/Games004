@@ -54,6 +54,13 @@ public class TetrisBlock {
 				rotated[x][block.length - y - 1] = block[y][x];
 			}
 		}
+
+		if (rotated[0].length + xOffset > TetrisStage.STAGE_WIDTH) {
+			int rightPosition = rotated[0].length + xOffset;
+			int dif = rightPosition - TetrisStage.STAGE_WIDTH;
+			xOffset = xOffset - dif;
+		}
+
 		return rotated;
 	}
 
