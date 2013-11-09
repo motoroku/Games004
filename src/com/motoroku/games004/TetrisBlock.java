@@ -61,14 +61,15 @@ public class TetrisBlock {
 	}
 
 	public void moveRight() {
-		int copyXOffset = block[0].length + xOffset + 1;
-		if (copyXOffset <= TetrisStage.STAGE_WIDTH) {
+		if (block[0].length + xOffset + 1 <= TetrisStage.STAGE_WIDTH) {
 			xOffset++;
 		}
 	}
 
 	public void moveLeft() {
-		xOffset--;
+		if (xOffset - 1 >= 0) {
+			xOffset--;
+		}
 	}
 
 	private void resetPosition() {
