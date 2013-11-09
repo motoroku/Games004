@@ -9,6 +9,7 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 	SurfaceHolder mHolder = null;
 	TetrisRogic mTetrisRogic;
 	TetrisBlock mTetrisBlock;
+	TetrisStage mTetrisStage;
 	int blockSize = 40;
 
 	private Thread thread = null;
@@ -28,7 +29,7 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 			}
 
 			time++;
-			mTetrisRogic.merge(mTetrisBlock.xOffset, mTetrisBlock.yOffset, mTetrisBlock.block);
+			mTetrisRogic.merge(mTetrisBlock.xOffset, mTetrisBlock.yOffset, mTetrisBlock.block, mTetrisStage.stage);
 			paint(mHolder);
 
 			if (mTetrisBlock.yOffset >= TetrisStage.STAGE_HEIGHT) {
@@ -41,6 +42,7 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 	public void surfaceCreated(SurfaceHolder holder) {
 		mTetrisRogic = new TetrisRogic();
 		mTetrisBlock = new TetrisBlock();
+		mTetrisStage = new TetrisStage();
 
 		// TODO Auto-generated method stub
 		this.mHolder = holder;
@@ -71,7 +73,7 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 
 		for (int i = 0; i < TetrisStage.STAGE_HEIGHT; i++) {
 			for (int j = 0; j < TetrisStage.STAGE_WIDTH; j++) {
-				if (mTetrisRogic.tetrisStage.stage[i][j] == 0) {
+				if (mTetrisStage.stage[i][j] == 0) {
 					paint.setColor(Color.GREEN);
 				} else {
 					paint.setColor(Color.RED);
