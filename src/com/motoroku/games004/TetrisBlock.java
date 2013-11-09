@@ -5,6 +5,7 @@ import java.util.Random;
 public class TetrisBlock {
 	int xOffset;
 	int yOffset;
+	static int BLOCK_SIZE = 4;
 	int[][] block;
 	Random random = new Random();
 
@@ -46,7 +47,7 @@ public class TetrisBlock {
 		return block;
 	}
 
-	public int[][] rotate(int[][] block) {
+	public int[][] rotate() {
 		int[][] rotated = new int[block.length][block[0].length];
 		for (int x = 0; x < block[0].length; x++) {
 			for (int y = 0; y < block.length; y++) {

@@ -96,6 +96,8 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 			case R.id.buttonLeft:
 				mTetrisBlock.moveLeft();
 				break;
+			case R.id.imageButtonRotate:
+				mTetrisBlock.block = mTetrisBlock.rotate();
 			default:
 				break;
 		}
