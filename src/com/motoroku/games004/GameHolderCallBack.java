@@ -64,6 +64,10 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 		thread = null;
 	}
 
+	/**
+	 * 生成されているステージのインスタンスの情報を元に描画処理を行う。
+	 * @param holder
+	 */
 	private void paint(SurfaceHolder holder) {
 		int x = 0;
 		int y = 0;
@@ -88,6 +92,10 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 		holder.unlockCanvasAndPost(canvas);
 	}
 
+	/**
+	 * ボタンのクリックイベントリスナー
+	 * @param id
+	 */
 	public void onClickedButton(int id) {
 		switch (id) {
 			case R.id.buttonRight:

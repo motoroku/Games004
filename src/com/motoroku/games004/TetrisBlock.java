@@ -13,6 +13,10 @@ public class TetrisBlock {
 		createNewBlock();
 	}
 
+	/**
+	 * blockの中身を新しい配列に置き換える
+	 * @return 新しいblockの配列
+	 */
 	public int[][] createNewBlock() {
 		block = null;
 		int num = random.nextInt(7) + 1;
@@ -47,6 +51,10 @@ public class TetrisBlock {
 		return block;
 	}
 
+	/**
+	 * blockの中身を回転させる
+	 * @return 回転したblock配列
+	 */
 	public int[][] rotate() {
 		int[][] rotated = new int[block[0].length][block.length];
 		for (int x = 0; x < block[0].length; x++) {
@@ -64,22 +72,41 @@ public class TetrisBlock {
 		return rotated;
 	}
 
+	/**
+	 * ブロックの位置を一つ上に動かす
+	 */
+	public void moveUp() {
+		yOffset--;
+	}
+
+	/**
+	 * ブロックの位置を一つ下に動かす
+	 */
 	public void moveDown() {
 		yOffset++;
 	}
 
+	/**
+	 * ブロックの位置を右に一つ動かす。もしもステージの幅を超える場合は何もしない
+	 */
 	public void moveRight() {
 		if (block[0].length + xOffset + 1 <= TetrisStage.STAGE_WIDTH) {
 			xOffset++;
 		}
 	}
 
+	/**
+	 * ブロックの位置を左に一つ動かす。もしもステージの幅を超える場合は何もしない
+	 */
 	public void moveLeft() {
 		if (xOffset - 1 >= 0) {
 			xOffset--;
 		}
 	}
 
+	/**
+	 * ブロックの位置を初期化する
+	 */
 	private void resetPosition() {
 		xOffset = TetrisStage.STAGE_WIDTH / 2;
 		yOffset = 0;
