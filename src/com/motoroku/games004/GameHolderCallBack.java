@@ -19,6 +19,7 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		int turn = 0;
+		mTetrisBlock.initBlock();
 		while (isAttached) {
 			// ブロックの位置をステージに反映させる
 			mTetrisLogic.merge(mTetrisBlock, mTetrisStage);
@@ -28,9 +29,9 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 			turn++;
 			// ターンが10進むごとにブロックの位置を一つ下に動かす
 			if (turn != 0 && turn % 10 == 0) {
-				if (mTetrisLogic.checkMovingBlock(mTetrisBlock, mTetrisStage)) {
-					mTetrisBlock.moveDown();
-				} else {
+				mTetrisBlock.moveDown();
+				if (!mTetrisLogic.checkMovingBlock(mTetrisBlock, mTetrisStage)) {
+					mTetrisLogic.merge(mTetrisBlock, mTetrisStage);
 					turn = 0;
 				}
 			}
@@ -80,7 +81,7 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 
 		for (int i = 0; i < TetrisStage.STAGE_HEIGHT; i++) {
 			for (int j = 0; j < TetrisStage.STAGE_WIDTH; j++) {
-				if (mTetrisStage.stage[i][j] == 0) {
+				if (mTetrisStage.tempStage[i][j] == 0) {
 					paint.setColor(Color.GREEN);
 				} else {
 					paint.setColor(Color.RED);
