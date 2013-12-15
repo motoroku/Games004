@@ -28,16 +28,16 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 			// ターンをひとつ進める
 			turn++;
 			// ターンが10進むごとにブロックの位置を一つ下に動かす
-			if (turn != 0 && turn % 10 == 0) {
+			if (turn % 10 == 0) {
 				mTetrisBlock.moveDown();
 				if (!mTetrisLogic.checkMovingBlock(mTetrisBlock, mTetrisStage)) {
+					// ブロックが止まったので状態をマージする
 					mTetrisLogic.merge(mTetrisBlock, mTetrisStage);
+					// 新しいブロックを生成する
+					mTetrisBlock.initBlock();
+					// turnを0に戻す
 					turn = 0;
 				}
-			}
-			// ターンが0になったら新しいブロックを生成する
-			if (turn == 0) {
-				mTetrisBlock.initBlock();
 			}
 		}
 	}

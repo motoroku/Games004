@@ -14,20 +14,24 @@ public class TetrisLogic {
 	 * @param stage ステージの配列
 	 */
 	public void merge(TetrisBlock block, TetrisStage stage) {
+		// 一度tempStageを初期化しておく
 		clearTempStage(stage);
 
 		int[][] blockPosition = getBlockPosition(block);
 		int k = 0;
 		for (int i = 0; i < TetrisStage.STAGE_HEIGHT; i++) {
 			for (int j = 0; j < TetrisStage.STAGE_WIDTH; j++) {
+				// ブロックのある場所を1にする
 				if (k < 4 && i == blockPosition[k][0] - 1 && j == blockPosition[k][1]) {
 					stage.tempStage[i][j] = 1;
 					k++;
 				} else {
+					// ブロックのない場所に関してはfixStageの状態をコピーする
 					stage.tempStage[i][j] = stage.fixStage[i][j];
 				}
 			}
 		}
+		// もしもブロックが止まったらその時点でのtempStageをfixStageにコピーする
 		if (!checkMovingBlock(block, stage)) {
 			for (int i = 0; i < TetrisStage.STAGE_HEIGHT; i++) {
 				for (int j = 0; j < TetrisStage.STAGE_WIDTH; j++) {
@@ -37,6 +41,10 @@ public class TetrisLogic {
 		}
 	}
 
+	/**
+	 * ステージを初期化する
+	 * @param stage
+	 */
 	private void clearTempStage(TetrisStage stage) {
 		for (int i = 0; i < TetrisStage.STAGE_HEIGHT; i++) {
 			for (int j = 0; j < TetrisStage.STAGE_WIDTH; j++) {
@@ -74,11 +82,11 @@ public class TetrisLogic {
 	 */
 	public boolean checkMovingBlock(TetrisBlock block, TetrisStage stage) {
 		int[][] blockPosition = getBlockPosition(block);
-		int a = blockPosition.length;
-		int b = blockPosition[blockPosition.length - 1][0];
+		// ステージの下に着いたらfalseを返す
 		if (blockPosition[blockPosition.length - 1][0] == TetrisStage.STAGE_HEIGHT) {
 			return false;
 		}
+		// blockPositionがfixStageのブロックのある場所とかぶったらfalseを返す
 		for (int i = 0; i < blockPosition.length; i++) {
 			if (stage.fixStage[blockPosition[i][0]][blockPosition[i][1]] == 1) {
 				return false;
