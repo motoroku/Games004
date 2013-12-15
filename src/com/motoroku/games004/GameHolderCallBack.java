@@ -18,22 +18,25 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		int time = 0;
+		int turn = 0;
 		while (isAttached) {
-			if (time == 0) {
-				mTetrisBlock.createNewBlock();
-			}
-
-			if (time != 0 && time % 10 == 0) {
-				mTetrisBlock.moveDown();
-			}
-
-			time++;
-			mTetrisRogic.merge(mTetrisBlock.xOffset, mTetrisBlock.yOffset, mTetrisBlock.block, mTetrisStage.stage);
+			// ブロックの位置をステージに反映させる
+			mTetrisRogic.merge(mTetrisBlock, mTetrisStage);
+			// 全体の描画処理
 			paint(mHolder);
-
-			if (mTetrisBlock.yOffset >= TetrisStage.STAGE_HEIGHT) {
-				time = 0;
+			// ターンをひとつ進める
+			turn++;
+			// ターンが10進むごとにブロックの位置を一つ下に動かす
+			if (turn != 0 && turn % 10 == 0) {
+				if (mTetrisRogic.checkMovingBlock(mTetrisBlock, mTetrisStage)) {
+					mTetrisBlock.moveDown();
+				} else {
+					turn = 0;
+				}
+			}
+			// ターンが0になったら新しいブロックを生成する
+			if (turn == 0) {
+				mTetrisBlock.createNewBlock();
 			}
 		}
 	}
