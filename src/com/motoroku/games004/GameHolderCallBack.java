@@ -7,7 +7,7 @@ import android.view.SurfaceHolder;
 
 public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 	SurfaceHolder mHolder = null;
-	TetrisLogic mTetrisRogic;
+	TetrisLogic mTetrisLogic;
 	TetrisBlock mTetrisBlock;
 	TetrisStage mTetrisStage;
 	int blockSize = 40;
@@ -21,14 +21,14 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 		int turn = 0;
 		while (isAttached) {
 			// ブロックの位置をステージに反映させる
-			mTetrisRogic.merge(mTetrisBlock, mTetrisStage);
+			mTetrisLogic.merge(mTetrisBlock, mTetrisStage);
 			// 全体の描画処理
 			paint(mHolder);
 			// ターンをひとつ進める
 			turn++;
 			// ターンが10進むごとにブロックの位置を一つ下に動かす
 			if (turn != 0 && turn % 10 == 0) {
-				if (mTetrisRogic.checkMovingBlock(mTetrisBlock, mTetrisStage)) {
+				if (mTetrisLogic.checkMovingBlock(mTetrisBlock, mTetrisStage)) {
 					mTetrisBlock.moveDown();
 				} else {
 					turn = 0;
@@ -36,14 +36,14 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 			}
 			// ターンが0になったら新しいブロックを生成する
 			if (turn == 0) {
-				mTetrisBlock.createNewBlock();
+				mTetrisBlock.initBlock();
 			}
 		}
 	}
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		mTetrisRogic = new TetrisLogic();
+		mTetrisLogic = new TetrisLogic();
 		mTetrisBlock = new TetrisBlock();
 		mTetrisStage = new TetrisStage();
 

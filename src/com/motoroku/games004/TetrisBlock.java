@@ -14,10 +14,18 @@ public class TetrisBlock {
 	}
 
 	/**
-	 * blockの中身を新しい配列に置き換える
+	 * ブロックの初期化を行う
+	 */
+	public void initBlock() {
+		createNewBlock();
+		resetPosition();
+	}
+
+	/**
+	 * blockの中身を新しい配列に置き換える。
 	 * @return 新しいblockの配列
 	 */
-	public int[][] createNewBlock() {
+	private int[][] createNewBlock() {
 		block = null;
 		int num = random.nextInt(7) + 1;
 		switch (num) {
@@ -47,8 +55,15 @@ public class TetrisBlock {
 				// default:
 				// block = new int[][] { { 1, 1 }, { 1, 1 }, { 1, 1 } };
 		}
-		resetPosition();
 		return block;
+	}
+
+	/**
+	 * ブロックの位置を初期化する
+	 */
+	private void resetPosition() {
+		xOffset = TetrisStage.STAGE_WIDTH / 2;
+		yOffset = 0;
 	}
 
 	/**
@@ -104,11 +119,4 @@ public class TetrisBlock {
 		}
 	}
 
-	/**
-	 * ブロックの位置を初期化する
-	 */
-	private void resetPosition() {
-		xOffset = TetrisStage.STAGE_WIDTH / 2;
-		yOffset = 0;
-	}
 }
