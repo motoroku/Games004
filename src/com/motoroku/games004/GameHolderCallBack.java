@@ -7,7 +7,7 @@ import android.view.SurfaceHolder;
 
 public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 	SurfaceHolder mHolder = null;
-	TetrisRogic mTetrisRogic;
+	TetrisLogic mTetrisRogic;
 	TetrisBlock mTetrisBlock;
 	TetrisStage mTetrisStage;
 	int blockSize = 40;
@@ -43,7 +43,7 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		mTetrisRogic = new TetrisRogic();
+		mTetrisRogic = new TetrisLogic();
 		mTetrisBlock = new TetrisBlock();
 		mTetrisStage = new TetrisStage();
 

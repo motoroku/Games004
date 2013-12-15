@@ -1,6 +1,6 @@
 package com.motoroku.games004;
 
-public class TetrisRogic {
+public class TetrisLogic {
 
 	// TetrisStage tetrisStage;
 	//
