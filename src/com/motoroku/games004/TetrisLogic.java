@@ -13,7 +13,7 @@ public class TetrisLogic {
 	 * @param block ブロックの情報
 	 * @param stage ステージの配列
 	 */
-	public void merge(TetrisBlock block, TetrisStage stage) {
+	public void mergeCurrentStage(TetrisBlock block, TetrisStage stage) {
 		// 一度tempStageを初期化しておく
 		clearTempStage(stage);
 
@@ -31,12 +31,17 @@ public class TetrisLogic {
 				}
 			}
 		}
-		// もしもブロックが止まったらその時点でのtempStageをfixStageにコピーする
-		if (!checkMovingBlock(block, stage)) {
-			for (int i = 0; i < TetrisStage.STAGE_HEIGHT; i++) {
-				for (int j = 0; j < TetrisStage.STAGE_WIDTH; j++) {
-					stage.fixStage[i][j] = stage.tempStage[i][j];
-				}
+	}
+
+	/**
+	 * ブロックの位置を固定する
+	 * @param stage
+	 */
+	public void fixCurrentStage(TetrisStage stage) {
+		// tempStageをfixStageにコピーする
+		for (int i = 0; i < TetrisStage.STAGE_HEIGHT; i++) {
+			for (int j = 0; j < TetrisStage.STAGE_WIDTH; j++) {
+				stage.fixStage[i][j] = stage.tempStage[i][j];
 			}
 		}
 	}

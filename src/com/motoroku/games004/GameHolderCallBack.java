@@ -12,34 +12,70 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 	TetrisStage mTetrisStage;
 	int blockSize = 40;
 
+	int turn = 0;
+	int horizonMove = 0;
+
 	private Thread thread = null;
 	private boolean isAttached = true;
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		int turn = 0;
 		mTetrisBlock.initBlock();
 		while (isAttached) {
 			// ブロックの位置をステージに反映させる
-			mTetrisLogic.merge(mTetrisBlock, mTetrisStage);
+			mTetrisLogic.mergeCurrentStage(mTetrisBlock, mTetrisStage);
 			// 全体の描画処理
 			paint(mHolder);
-			// ターンをひとつ進める
-			turn++;
+			/*
+			 * ブロックの左右への移動をこのスレッド外で行おうとしたら上手く出来なかったので
+			 * ボタンの値を取っておきスレッド内でその値を利用してブロックの左右移動を行う
+			 */
+			// 左右への移動入力があればその結果を反映させる
+			if (horizonMove > 0) {
+				for (int i = 0; horizonMove > i; i++) {
+					mTetrisBlock.moveRight();
+					if (!mTetrisLogic.checkMovingBlock(mTetrisBlock, mTetrisStage)) {
+						mTetrisBlock.moveLeft();
+						break;
+					}
+				}
+				horizonMove = 0;
+			} else if (horizonMove < 0) {
+				horizonMove = horizonMove * -1;
+				for (int i = 0; horizonMove > i; i++) {
+					mTetrisBlock.moveLeft();
+					if (!mTetrisLogic.checkMovingBlock(mTetrisBlock, mTetrisStage)) {
+						mTetrisBlock.moveRight();
+						break;
+					}
+				}
+				horizonMove = 0;
+			}
+
 			// ターンが10進むごとにブロックの位置を一つ下に動かす
 			if (turn % 10 == 0) {
 				mTetrisBlock.moveDown();
 				if (!mTetrisLogic.checkMovingBlock(mTetrisBlock, mTetrisStage)) {
-					// ブロックが止まったので状態をマージする
-					mTetrisLogic.merge(mTetrisBlock, mTetrisStage);
-					// 新しいブロックを生成する
-					mTetrisBlock.initBlock();
-					// turnを0に戻す
-					turn = 0;
+					finishTurn();
 				}
 			}
+			// ターンをひとつ進める
+			turn++;
 		}
+	}
+
+	private void finishTurn() {
+		// ブロックの位置をステージに反映させる
+		mTetrisLogic.mergeCurrentStage(mTetrisBlock, mTetrisStage);
+		// ブロックの位置を保存する
+		mTetrisLogic.fixCurrentStage(mTetrisStage);
+		// 新しいブロックを生成する
+		mTetrisBlock.initBlock();
+		// turnを0に戻す
+		turn = 0;
+		// 左右の動きも一度初期化する
+		horizonMove = 0;
 	}
 
 	@Override
@@ -103,10 +139,10 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 	public void onClickedButton(int id) {
 		switch (id) {
 			case R.id.buttonRight:
-				mTetrisBlock.moveRight();
+				horizonMove++;
 				break;
 			case R.id.buttonLeft:
-				mTetrisBlock.moveLeft();
+				horizonMove--;
 				break;
 			case R.id.imageButtonRotate:
 				mTetrisBlock.block = mTetrisBlock.rotate();
