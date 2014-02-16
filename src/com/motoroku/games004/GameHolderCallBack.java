@@ -70,6 +70,10 @@ public class GameHolderCallBack implements SurfaceHolder.Callback, Runnable {
 		mTetrisLogic.mergeCurrentStage(mTetrisBlock, mTetrisStage);
 		// ブロックの位置を保存する
 		mTetrisLogic.fixCurrentStage(mTetrisStage);
+		// 揃っているラインを削除する
+		if (mTetrisLogic.clearLine(mTetrisStage)) {
+			mTetrisLogic.adjustLines(mTetrisStage);
+		}
 		// 新しいブロックを生成する
 		mTetrisBlock.initBlock();
 		// turnを0に戻す

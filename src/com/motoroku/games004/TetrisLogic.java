@@ -99,4 +99,68 @@ public class TetrisLogic {
 		}
 		return true;
 	}
+
+	public boolean clearLine(TetrisStage stage) {
+		boolean cleared = false;
+		for (int i = 0; i < TetrisStage.STAGE_HEIGHT; i++) {
+			for (int j = 0; j < TetrisStage.STAGE_WIDTH; j++) {
+				if (stage.fixStage[i][j] == 0) {
+					break;
+				} else if (j == TetrisStage.STAGE_WIDTH - 1) {
+					for (int k = 0; k < TetrisStage.STAGE_WIDTH; k++) {
+						stage.fixStage[i][k] = 0;
+					}
+					cleared = true;
+				}
+			}
+		}
+		return cleared;
+	}
+
+	public void adjustLines(TetrisStage stage) {
+		// stageの下から見ていく
+		for (int i = TetrisStage.STAGE_HEIGHT - 1; i > 0; i--) {
+			// 一列が全て空白がどうかをチェック
+			if (isBlankLine(stage.fixStage[i])) {
+				// チェックしている列の一つ上をコピーし、コピー元は空白にする
+				for (int k = 0; k < TetrisStage.STAGE_WIDTH; k++) {
+					stage.fixStage[i][k] = stage.fixStage[i - 1][k];
+					stage.fixStage[i - 1][k] = 0;
+				}
+			}
+		}
+		if (checkAdjust(stage)) {
+			adjustLines(stage);
+		}
+	}
+
+	private boolean isBlankLine(int[] line) {
+		int length = line.length;
+		for (int i = 0; i < length; i++) {
+			if (line[i] == 1) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private boolean checkAdjust(TetrisStage stage) {
+		boolean isBlank = false;
+		// 一列ずつ下からチェック
+		for (int i = TetrisStage.STAGE_HEIGHT - 1; i > 0; i--) {
+			// 最初の空白の列があったらチェック開始
+			if (!isBlank && isBlankLine(stage.fixStage[i])) {
+				isBlank = true;
+				continue;
+			}
+			// 空白列があってから
+			if (isBlank) {
+				// ブロックのある列があったら
+				if (!isBlankLine(stage.fixStage[i])) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }
