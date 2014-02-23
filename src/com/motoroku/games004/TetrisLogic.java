@@ -100,6 +100,11 @@ public class TetrisLogic {
 		return true;
 	}
 
+	/**
+	 * 横一列に揃っているブロックを消去する
+	 * @param stage ステージの情報
+	 * @return 消去が行われたらtrue、無ければfalse
+	 */
 	public boolean clearLine(TetrisStage stage) {
 		boolean cleared = false;
 		for (int i = 0; i < TetrisStage.STAGE_HEIGHT; i++) {
@@ -117,6 +122,10 @@ public class TetrisLogic {
 		return cleared;
 	}
 
+	/**
+	 * ブロック消去が行われた後の空列を詰める
+	 * @param stage ステージの情報
+	 */
 	public void adjustLines(TetrisStage stage) {
 		// stageの下から見ていく
 		for (int i = TetrisStage.STAGE_HEIGHT - 1; i > 0; i--) {
@@ -134,6 +143,11 @@ public class TetrisLogic {
 		}
 	}
 
+	/**
+	 * 一列にブロックがあるかどうかをチェックする
+	 * @param line ステージの横一列分の配列
+	 * @return 一列全てが空白ならtrue、一つでもブロックがあればfalse
+	 */
 	private boolean isBlankLine(int[] line) {
 		int length = line.length;
 		for (int i = 0; i < length; i++) {
@@ -144,6 +158,11 @@ public class TetrisLogic {
 		return true;
 	}
 
+	/**
+	 * ステージを下から見ていき、空白列の上にブロックがある列があるかどうかをチェック
+	 * @param stage ステージの情報
+	 * @return 空白列があった後にブロックのある列があればtrue、無ければfalse
+	 */
 	private boolean checkAdjust(TetrisStage stage) {
 		boolean isBlank = false;
 		// 一列ずつ下からチェック

@@ -3,8 +3,8 @@ package com.motoroku.games004;
 public class TetrisStage {
 	int[][] tempStage = new int[STAGE_HEIGHT][STAGE_WIDTH];
 	int[][] fixStage = new int[STAGE_HEIGHT][STAGE_WIDTH];
-	static int STAGE_WIDTH = 8;
-	static int STAGE_HEIGHT = 14;
+	static int STAGE_WIDTH = 12;
+	static int STAGE_HEIGHT = 18;
 
 	public TetrisStage() {
 		for (int i = 0; i < STAGE_HEIGHT; i++) {
